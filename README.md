@@ -151,12 +151,6 @@ Statuses are conservative and based on the public repository metadata and docume
 - Embedded schema metadata improvements.
 - Documentation and examples.
 
-## OpenAPI And OpenRPC
-
-RPC Toolkit is not intended to replace OpenAPI. OpenAPI remains useful for public REST boundaries. RPC Toolkit focuses on method-oriented runtime interoperability across services, tools, and embedded endpoints.
-
-OpenRPC is a natural fit for describing JSON-RPC methods, and future work may include OpenRPC export from introspection metadata.
-
 ## License
 
 MIT. See [LICENSE](LICENSE).
