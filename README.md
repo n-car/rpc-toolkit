@@ -128,7 +128,7 @@ When allowed by the endpoint security policy, introspection can expose method me
 
 ## Compatibility Status
 
-Statuses are conservative and based on the public repository metadata and documentation available in this workspace. See [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md) for the full matrix.
+Statuses are conservative and based on the public repository metadata and documentation. See [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md) for the full matrix.
 
 | Feature | Overall Status |
 | --- | --- |
