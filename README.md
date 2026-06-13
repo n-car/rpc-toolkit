@@ -1,5 +1,9 @@
 # RPC Toolkit
 
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-ecosystem%20hub-blue.svg)](https://github.com/n-car/rpc-toolkit)
+[![Compatibility](https://img.shields.io/badge/compatibility-validated-green.svg)](docs/COMPATIBILITY.md)
+
 Build interoperable JSON-RPC 2.0 endpoints across runtimes.
 
 RPC Toolkit is a cross-runtime JSON-RPC 2.0 ecosystem for building and connecting RPC endpoints across backend services, embedded devices, Android apps, browser clients, and integration flows.
