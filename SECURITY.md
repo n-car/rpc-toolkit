@@ -6,7 +6,7 @@ This repository is a documentation hub for the RPC Toolkit ecosystem. Security h
 
 Please do not disclose security issues in public issues before they have been reviewed.
 
-Use the maintainer contact published in the relevant implementation repository. If the issue affects this ecosystem hub or multiple repositories, contact Nicola Carpanese at `nicola@carpanese.com`.
+Use the maintainer contact published in the relevant implementation repository. If the issue affects this ecosystem hub or multiple repositories, contact Nicola Carpanese through https://github.com/n-car.
 
 If a dedicated security contact is published later, prefer that channel.
 
