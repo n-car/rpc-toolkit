@@ -41,7 +41,7 @@ https://github.com/n-car/rpc-express-toolkit
 Title:
 
 ```text
-RPCToolkit: JSON-RPC 2.0 client/server library for ESP32 and ESP8266, now in Arduino Library Manager
+RPCToolkit: JSON-RPC 2.0 client/server library for ESP32 and ESP8266
 ```
 
 Body:
@@ -58,7 +58,7 @@ It supports:
 - built-in introspection methods
 - optional RPC Toolkit Safe Mode interoperability
 
-It is available as RPCToolkit in Arduino Library Manager and as n-car/RPCToolkit in PlatformIO.
+It is currently installable from GitHub source/ZIP. Arduino Library Manager and PlatformIO Registry publication are planned after the initial release workflow is complete.
 
 I have physically tested ESP32 Safe Mode interoperability against the Node/Express reference endpoint, and ESP8266 HTTP client behavior against an ESP32 Arduino server. The docs include memory and validation notes because ESP8266 heap/stack headroom is the delicate part.
 

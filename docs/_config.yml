@@ -1,3 +1,9 @@
 title: RPC Toolkit
 description: Cross-runtime JSON-RPC 2.0 toolkit ecosystem.
 theme: minima
+header_pages:
+  - COMPATIBILITY.md
+  - VALIDATION.md
+  - ROADMAP.md
+exclude:
+  - LAUNCH_POST_DRAFTS.md
