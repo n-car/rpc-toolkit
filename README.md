@@ -1,176 +1,259 @@
 # RPC Toolkit
 
-RPC Toolkit is a cross-runtime JSON-RPC 2.0 ecosystem for building self-describing, type-aware, and operationally manageable RPC endpoints across backend services, embedded devices, and integration tools.
+Build interoperable JSON-RPC 2.0 endpoints across runtimes.
 
-RPC Toolkit uses standard JSON-RPC 2.0 by default.
+RPC Toolkit is a cross-runtime JSON-RPC 2.0 ecosystem for building and connecting RPC endpoints across backend services, embedded devices, Android apps, browser clients, and integration flows.
 
-Compatible implementations may optionally enable RPC Toolkit Safe Mode to preserve application-level type intent across JSON boundaries.
+Start with standard JSON-RPC 2.0. Add runtime introspection, schema metadata, validation, and optional type-aware interoperability only when you need them.
 
-Endpoints can expose runtime introspection metadata so clients, tools, and integration layers can discover available methods, capabilities, and schemas when allowed.
+## Start Here
+
+### Fastest Way To Try It
+
+Use the Express implementation if you want the quickest hands-on starting point:
+
+- [rpc-express-toolkit](https://github.com/n-car/rpc-express-toolkit) - Express.js JSON-RPC endpoint and client toolkit
+
+### Choose Your Runtime
+
+Use the implementation that matches your environment:
+
+| Project | Runtime / Target | Role |
+| --- | --- | --- |
+| [rpc-express-toolkit](https://github.com/n-car/rpc-express-toolkit) | Node.js / Express | Express endpoint + client |
+| [rpc-node-toolkit](https://github.com/n-car/rpc-node-toolkit) | Node.js | Framework-agnostic endpoint + client |
+| [rpc-toolkit-js-client](https://github.com/n-car/rpc-toolkit-js-client) | Browser / Node.js | Shared JavaScript client |
+| [rpc-dotnet-toolkit](https://github.com/n-car/rpc-dotnet-toolkit) | .NET / ASP.NET Core | Endpoint + client |
+| [rpc-java-toolkit](https://github.com/n-car/rpc-java-toolkit) | Java / Android | Endpoint + client + Android module |
+| [rpc-python-toolkit](https://github.com/n-car/rpc-python-toolkit) | Python | Endpoint + client |
+| [rpc-php-toolkit](https://github.com/n-car/rpc-php-toolkit) | PHP | Endpoint + client |
+| [rpc-arduino-toolkit](https://github.com/n-car/rpc-arduino-toolkit) | Arduino / ESP32 / ESP8266 | Embedded endpoint + client |
+| [node-red-contrib-rpc-toolkit](https://github.com/n-car/node-red-contrib-rpc-toolkit) | Node-RED | Visual client/server nodes |
 
 ## Why RPC Toolkit?
 
-Many JSON-RPC libraries focus on method dispatch. RPC Toolkit focuses on the full lifecycle of RPC endpoints:
+### Standard JSON-RPC First
 
-- calling methods;
-- discovering capabilities;
-- describing params and results;
-- preserving type intent when endpoints agree;
-- validating schemas where supported;
-- integrating across runtimes;
-- diagnosing deployed endpoints;
-- supporting embedded and edge devices.
+RPC Toolkit uses standard JSON-RPC 2.0 request, response, notification, error, and batch semantics as the baseline interoperability layer.
 
-The goal is practical interoperability across services, tools, and devices while keeping standard JSON-RPC 2.0 as the baseline protocol.
+You can start with plain JSON-RPC and stay there if that is all you need.
 
-## Ecosystem
+### Discoverability When Useful
 
-| Project | Runtime / Target | Purpose |
-| --- | --- | --- |
-| [`rpc-toolkit-js-client`](https://github.com/n-car/rpc-toolkit-js-client) | Browser / Node.js | Shared JavaScript JSON-RPC client with Safe Mode support |
-| [`rpc-node-toolkit`](https://github.com/n-car/rpc-node-toolkit) | Node.js | Framework-agnostic Node.js JSON-RPC toolkit with HTTP handler support |
-| [`rpc-express-toolkit`](https://github.com/n-car/rpc-express-toolkit) | Node.js / Express | Express JSON-RPC endpoint and client toolkit |
-| [`rpc-python-toolkit`](https://github.com/n-car/rpc-python-toolkit) | Python | Framework-agnostic Python JSON-RPC toolkit with Safe Mode interoperability |
-| [`rpc-php-toolkit`](https://github.com/n-car/rpc-php-toolkit) | PHP | PHP JSON-RPC toolkit with middleware, schema validation, batch processing, and Safe Mode |
-| [`rpc-dotnet-toolkit`](https://github.com/n-car/rpc-dotnet-toolkit) | .NET | .NET JSON-RPC toolkit with endpoint, client, batch, Safe Mode, middleware, and method authorization |
-| [`rpc-java-toolkit`](https://github.com/n-car/rpc-java-toolkit) | Java / Android | Java JSON-RPC toolkit with core, server, client, and Android modules |
-| [`rpc-arduino-toolkit`](https://github.com/n-car/rpc-arduino-toolkit) | Arduino / ESP32 / ESP8266 | Embedded JSON-RPC endpoint toolkit with Serial and HTTP transports |
-| [`node-red-contrib-rpc-toolkit`](https://github.com/n-car/node-red-contrib-rpc-toolkit) | Node-RED | Visual integration nodes for JSON-RPC client and server flows |
+Compatible endpoint implementations can expose runtime introspection methods so clients and tools can discover:
 
-## Core Concepts
+- available methods;
+- endpoint capabilities;
+- method descriptions;
+- parameter and result schemas where supported.
 
-### Standard JSON-RPC 2.0
+### Same Model Across Runtimes
 
-RPC Toolkit implementations use standard JSON-RPC 2.0 request, response, notification, error, and batch semantics as the default interoperability layer.
+RPC Toolkit is designed for systems that span more than one environment.
 
-### Optional Safe Mode
+Instead of using unrelated RPC libraries in each language or runtime, you can use the same RPC model across:
 
-Safe Mode is an optional RPC Toolkit convention for preserving application-level type intent across JSON boundaries. It is enabled only when compatible endpoints agree, typically through HTTP negotiation.
+- backend services;
+- browser and Node.js clients;
+- Java and Android clients;
+- embedded devices;
+- Node-RED flows;
+- multi-language integration points.
 
-Safe Mode is not authentication, authorization, TLS, signing, or encryption.
+## 2-Minute Example
+
+This example uses Express because it is the fastest practical starting point for most users.
+
+### Install
+
+```bash
+npm install express rpc-express-toolkit
+```
+
+### Server
+
+```javascript
+const express = require('express');
+const { RpcEndpoint } = require('rpc-express-toolkit');
+
+const app = express();
+app.use(express.json());
+
+const rpc = new RpcEndpoint(app, {}, { endpoint: '/rpc' });
+
+rpc.addMethod('add', (_req, _ctx, params) => {
+  return params.a + params.b;
+});
+
+app.listen(3000, () => {
+  console.log('RPC server listening on http://localhost:3000/rpc');
+});
+```
+
+### Request
+
+```bash
+curl -X POST http://localhost:3000/rpc \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"add","params":{"a":2,"b":3},"id":1}'
+```
+
+### Response
+
+```json
+{"jsonrpc":"2.0","id":1,"result":5}
+```
+
+If you want a framework-agnostic Node.js server instead, use [rpc-node-toolkit](https://github.com/n-car/rpc-node-toolkit).
+
+## Choose Your Starting Point
+
+| Need | Start With |
+| --- | --- |
+| Fastest Node.js onboarding | [rpc-express-toolkit](https://github.com/n-car/rpc-express-toolkit) |
+| Plain Node.js without Express | [rpc-node-toolkit](https://github.com/n-car/rpc-node-toolkit) |
+| JavaScript client only | [rpc-toolkit-js-client](https://github.com/n-car/rpc-toolkit-js-client) |
+| .NET or ASP.NET Core | [rpc-dotnet-toolkit](https://github.com/n-car/rpc-dotnet-toolkit) |
+| Java or Android | [rpc-java-toolkit](https://github.com/n-car/rpc-java-toolkit) |
+| Python | [rpc-python-toolkit](https://github.com/n-car/rpc-python-toolkit) |
+| PHP | [rpc-php-toolkit](https://github.com/n-car/rpc-php-toolkit) |
+| ESP32, ESP8266, or Arduino-style devices | [rpc-arduino-toolkit](https://github.com/n-car/rpc-arduino-toolkit) |
+| Visual automation and integration flows | [node-red-contrib-rpc-toolkit](https://github.com/n-car/node-red-contrib-rpc-toolkit) |
+
+## Optional Capabilities
+
+These capabilities are implementation-dependent and optional. They are not required to start using RPC Toolkit.
 
 ### Runtime Introspection
 
-Implementations may expose `__rpc.*` methods that let clients and tools discover available methods, versions, schemas, and capabilities at runtime.
+Implementations may expose built-in `__rpc.*` methods such as:
 
-### Schema Metadata And Validation
+- `__rpc.listMethods`
+- `__rpc.describe`
+- `__rpc.describeAll`
+- `__rpc.version`
+- `__rpc.capabilities`
 
-Several implementations support JSON Schema metadata for method params and results. Some implementations can also validate calls at runtime. Schema exposure and validation are related but separate features.
+These methods help clients and tools inspect an endpoint at runtime when allowed by the endpoint security policy.
 
-### Security And Controlled Discoverability
+### Schema Metadata
 
-The security principle is:
+Several implementations support attaching schema metadata to methods so tools and callers can understand expected params and results.
+
+### Validation
+
+Some implementations support validating incoming requests against declared schemas.
+
+### Optional Safe Mode
+
+RPC Toolkit implementations may optionally enable Safe Mode to preserve application-level type intent across JSON boundaries.
+
+Safe Mode is only used when compatible endpoints agree. Standard JSON-RPC 2.0 remains the default baseline.
+
+Safe Mode is useful when you control both sides and want clearer round-tripping for values such as:
+
+- strings that must stay unambiguous;
+- dates;
+- large integers.
+
+Safe Mode is not authentication, authorization, encryption, or transport security.
+
+## When To Use RPC Toolkit
+
+RPC Toolkit is a good fit when:
+
+- you want a lightweight RPC model instead of a large API framework;
+- you want the same RPC approach across multiple languages or runtimes;
+- you need endpoint introspection or schema metadata;
+- you are connecting services, integration tools, and devices;
+- you want JSON-RPC 2.0 as the baseline, with optional richer interoperability.
+
+RPC Toolkit may be unnecessary when:
+
+- you only need a tiny local RPC handler in one language;
+- you do not care about cross-runtime consistency;
+- you want a single-framework solution with no ecosystem concerns;
+- you do not need introspection, metadata, or shared conventions.
+
+## Validation And Compatibility
+
+RPC Toolkit is not just a set of similarly named repositories. The ecosystem includes published compatibility and validation snapshots covering multiple maintained implementations and tested cross-runtime behavior.
+
+See:
+
+- [Compatibility matrix](docs/COMPATIBILITY.md)
+- [Validation snapshot](docs/VALIDATION.md)
+
+Current public snapshot highlights, last updated on 2026-06-13:
+
+- Cross-runtime HTTP interoperability matrix: `36/36` client/server combinations passed.
+- Express Safe Mode baseline: `pass=13 fail=0`.
+- Node core HTTP Safe Mode: `pass=16 fail=0 gap=0`.
+- .NET, Java, PHP, and Python client/server matrix runs passed.
+- Android runtime evidence: physical `rpc-android` instrumentation tests passed on Samsung `SM-T733`, Android 14/API 34.
+- Arduino runtime evidence: physical ESP32 and ESP8266EX WiFi runs passed.
+- Node-RED runtime probe and public Flow Library scorecard are green.
+
+For the full details, use the compatibility and validation documents above.
+
+## Architecture At A Glance
+
+```text
+Browser / Node.js client
+        |
+        v
+Express / Node / .NET / Java / PHP / Python endpoints
+        |
+        +---- Node-RED flows
+        |
+        +---- ESP32 / ESP8266 devices
+```
+
+Baseline:
+
+- standard JSON-RPC 2.0.
+
+Optional:
+
+- introspection;
+- schema metadata;
+- validation;
+- Safe Mode between compatible endpoints.
+
+## Ecosystem Principles
+
+### Standard First
+
+JSON-RPC 2.0 remains the baseline protocol.
+
+### Advanced Capabilities Are Optional
+
+Introspection, schema exposure, validation, and Safe Mode are additive capabilities, not mandatory prerequisites.
+
+### Registered Does Not Mean Visible Or Authorized
+
+A method being registered does not automatically mean it should be discoverable or callable by every client.
 
 ```text
 registered != visible != authorized
 ```
 
-Hiding a method from introspection is not a replacement for authorization. Method calls must still be protected by authentication, authorization middleware, method whitelisting, gateway rules, deployment controls, or equivalent mechanisms.
-
 Detailed introspection and schema exposure should be controlled in production. Embedded devices should not be exposed directly to the public Internet without a proper gateway or network protection.
 
-### Embedded And Edge Integration
+### Runtime Differences Are Acknowledged
 
-The Arduino implementation targets constrained devices and ESP32/ESP8266-style deployments. Serial and HTTP transports make it possible to integrate embedded endpoints with backend services, Node-RED flows, and test tools.
-
-## Validation Snapshot
-
-The ecosystem now has concrete interoperability evidence, not just implementation intent. See [docs/VALIDATION.md](docs/VALIDATION.md) for the full current snapshot.
-
-Last updated: 2026-06-13.
-
-| Area | Result |
-| --- | --- |
-| Cross-runtime HTTP interoperability matrix | `36/36` client/server combinations passed; `fail=0 gap=0` |
-| Express Safe Mode baseline | `pass=13 fail=0` |
-| Node core HTTP Safe Mode | `pass=16 fail=0 gap=0`; unit tests `8 passed` |
-| .NET interoperability | .NET client to all matrix servers passed; all matrix clients to .NET server passed; unit tests `60 passed` |
-| Java interoperability | Java client to all matrix servers passed; all matrix clients to Java server passed; full Gradle test suite passed |
-| Android Java runtime | `rpc-android` instrumentation tests on Samsung `SM-T733`, Android 14/API 34: `4 passed` over `adb reverse`; `4 passed` over direct WiFi/LAN |
-| PHP interoperability | PHP client to all matrix servers passed; all matrix clients to PHP server passed |
-| Python interoperability | Python client to all matrix servers passed; all matrix clients to Python server passed; unit tests `12 passed` |
-| Arduino ESP32 physical runtime | Node client to ESP32 WiFi server `pass=21 fail=0 gap=0`; ESP32 board-to-board heap run captured |
-| Arduino ESP8266 physical runtime | ESP8266 WiFi client to Express Safe endpoint `pass=21 fail=0 gap=0`; ESP8266 WiFi client to ESP32 server `pass=21 fail=0 gap=0` |
-| Node-RED integration | Docker runtime probe `pass=27 fail=0`; public Flow Library scorecard `pass=12 warn=0 fail=0` |
-
-## Minimal JSON-RPC Example
-
-Request:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "machine.status",
-  "params": {
-    "machineId": "M01"
-  },
-  "id": 1
-}
-```
-
-Response:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "state": "running"
-  },
-  "id": 1
-}
-```
-
-## Safe Mode Example
-
-Safe Mode uses explicit markers for values that JSON cannot represent unambiguously:
-
-```text
-string -> S:<value>
-Date   -> D:<iso-date>
-BigInt -> <digits>n
-```
-
-Safe Mode is optional. It is enabled only when compatible endpoints agree. It preserves application-level type intent; it does not replace JSON-RPC 2.0 and it is not a security feature.
-
-## Introspection Example
-
-Common introspection methods include:
-
-```text
-__rpc.listMethods
-__rpc.describe
-__rpc.describeAll
-__rpc.version
-__rpc.capabilities
-```
-
-When allowed by the endpoint security policy, introspection can expose method metadata, params schemas, result schemas, versions, and capabilities.
-
-## Compatibility Status
-
-Statuses are based on implementation documentation plus the validation evidence summarized above. See [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md) for the full matrix.
-
-| Feature | Overall Status |
-| --- | --- |
-| JSON-RPC 2.0 request/response | Supported across maintained implementations |
-| Notifications and batch requests | Tested across the main HTTP service runtimes and Node-RED; supported in Arduino with constrained embedded semantics |
-| Safe Mode | Tested across Node/Express, .NET, Java, Android, PHP, Python, Node-RED, and physical ESP32/ESP8266 WiFi runtime |
-| Introspection | Supported in endpoint implementations where documented |
-| Schema metadata | Supported in most endpoint implementations |
-| Runtime schema validation | Supported where validation libraries are integrated |
-| Embedded Serial / HTTP | Supported by `rpc-arduino-toolkit`; ESP32 and ESP8266 physical WiFi runtime captured, with ESP8266 build validation |
-| Node-RED integration | Supported by `node-red-contrib-rpc-toolkit`; Docker runtime and public Flow Library scorecard are green |
+RPC Toolkit aims for practical interoperability, not artificial uniformity. Some capabilities depend on the host runtime and transport.
 
 ## Roadmap
 
-- Keep the cross-runtime validation snapshot current as releases are published.
-- Add more hardware variants and network conditions to the embedded validation notes.
-- Promote the shared interoperability harness from maintainer-only test projects into a more repeatable public conformance suite.
-- OpenRPC export from introspection metadata.
-- OpenAPI bridge/adapters where useful.
-- Security/visibility model alignment across runtimes.
-- Embedded schema metadata improvements.
-- Keep documentation and runnable examples current across implementation repositories.
+- Keep the cross-runtime validation snapshot current.
+- Keep public examples and onboarding current across all runtime repositories.
+- Improve runtime selection guidance from this hub repository.
+- Continue alignment of introspection and schema conventions.
+- Expand embedded and Android validation coverage across more devices.
+- Promote repeatable public interoperability testing over time.
+- Explore OpenRPC export from introspection metadata.
+- Explore OpenAPI bridge/adapters where useful.
 
 ## License
 
