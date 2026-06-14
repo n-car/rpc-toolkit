@@ -10,6 +10,8 @@ RPC Toolkit is a cross-runtime JSON-RPC 2.0 ecosystem for building and connectin
 
 Start with standard JSON-RPC 2.0. Add runtime introspection, schema metadata, validation, and optional type-aware interoperability only when you need them.
 
+Public documentation site: [https://n-car.github.io/rpc-toolkit/](https://n-car.github.io/rpc-toolkit/)
+
 ## Start Here
 
 ### Fastest Way To Try It
