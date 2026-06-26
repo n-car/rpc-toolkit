@@ -10,7 +10,21 @@ RPC Toolkit is a cross-runtime JSON-RPC 2.0 ecosystem for building and connectin
 
 Start with standard JSON-RPC 2.0. Add runtime introspection, schema metadata, validation, and optional type-aware interoperability only when you need them.
 
+Cross-runtime interoperability: **36/36** client/server combinations tested and passed across Node.js, Python, Java, .NET, PHP, and Python — plus physical hardware validation on ESP32, ESP8266, and Android.
+
 Public documentation site: [https://n-car.github.io/rpc-toolkit/](https://n-car.github.io/rpc-toolkit/)
+
+## A Real-World Scenario
+
+An ESP32 sensor reads temperature over WiFi and calls a Python analytics service.
+The Python service pushes results to a Node-RED flow that triggers a .NET notification API.
+A browser dashboard polls the Express endpoint for live data.
+
+Without RPC Toolkit: four unrelated RPC libraries, custom serialization glue between each pair,
+no shared introspection, interoperability untested.
+
+With RPC Toolkit: one protocol, nine maintained runtimes, 36/36 cross-runtime combinations
+tested, physical ESP32 and Android hardware evidence included.
 
 ## Start Here
 
@@ -65,6 +79,22 @@ Instead of using unrelated RPC libraries in each language or runtime, you can us
 - embedded devices;
 - Node-RED flows;
 - multi-language integration points.
+
+## Why Not gRPC, jayson, or OpenRPC?
+
+| Need | Best choice |
+| --- | --- |
+| High-performance backend-to-backend only, binary protocol | gRPC |
+| Simple JSON-RPC in Node.js or browser only | jayson |
+| Spec-first API documentation and code generation | OpenRPC |
+| Same RPC model from ESP32 to browser to Node-RED | **RPC Toolkit** |
+
+RPC Toolkit is not a replacement for gRPC in high-throughput service meshes.
+It is the right choice when your system spans embedded devices, backend services,
+and integration tools that need to speak the same protocol without glue layers.
+
+No other maintained JSON-RPC ecosystem provides tested interoperability from
+Arduino/ESP32 hardware through Node.js, Python, Java, .NET, PHP, and Node-RED flows.
 
 ## 2-Minute Example
 
@@ -152,15 +182,12 @@ Some implementations support validating incoming requests against declared schem
 
 ### Optional Safe Mode
 
-RPC Toolkit implementations may optionally enable Safe Mode to preserve application-level type intent across JSON boundaries.
+JSON loses type information at language boundaries. A JavaScript `Date` becomes a plain string in Python. A `BigInt` loses precision when serialized as a JSON number.
 
-Safe Mode is only used when compatible endpoints agree. Standard JSON-RPC 2.0 remains the default baseline.
+RPC Toolkit Safe Mode preserves application-level value intent across JSON-RPC 2.0 boundaries — strings stay unambiguous, dates round-trip correctly, large integers keep their precision.
 
-Safe Mode is useful when you control both sides and want clearer round-tripping for values such as:
-
-- strings that must stay unambiguous;
-- dates;
-- large integers.
+Safe Mode is opt-in. Standard JSON-RPC 2.0 remains the default for compatibility with any client.
+Enable it only when you control both sides and want cleaner type round-trips across runtimes.
 
 Safe Mode is not authentication, authorization, encryption, or transport security.
 
