@@ -57,7 +57,6 @@ Public registry versions verified on 2026-06-28:
 | Runtime / Target | Registry Package | Latest | Install |
 | --- | --- | --- | --- |
 | Node.js / Express | npm [`rpc-express-toolkit`](https://www.npmjs.com/package/rpc-express-toolkit) | `4.4.0` | `npm install express rpc-express-toolkit` |
-| Express Safe Mode proxy | npm [`rpc-express-toolkit-safe`](https://www.npmjs.com/package/rpc-express-toolkit-safe) | `4.4.0` | `npm install rpc-express-toolkit-safe` |
 | Node.js core | npm [`rpc-node-toolkit`](https://www.npmjs.com/package/rpc-node-toolkit) | `0.1.3` | `npm install rpc-node-toolkit` |
 | JavaScript client | npm [`rpc-toolkit-js-client`](https://www.npmjs.com/package/rpc-toolkit-js-client) | `1.1.2` | `npm install rpc-toolkit-js-client` |
 | Node-RED | npm / Flow Library [`node-red-contrib-rpc-toolkit`](https://flows.nodered.org/node/node-red-contrib-rpc-toolkit) | `2.3.1` on npm | `npm install node-red-contrib-rpc-toolkit` |
@@ -68,8 +67,6 @@ Public registry versions verified on 2026-06-28:
 | PHP | Packagist [`n-car/rpc-php-toolkit`](https://packagist.org/packages/n-car/rpc-php-toolkit) | `1.0.4` | `composer require n-car/rpc-php-toolkit` |
 | Arduino / ESP32 / ESP8266 | Arduino Library Manager `RPCToolkit` | `1.0.0` | Install `RPCToolkit` from Library Manager |
 | PlatformIO | PlatformIO [`n-car/RPCToolkit`](https://registry.platformio.org/libraries/n-car/RPCToolkit) | `1.0.0` | `lib_deps = n-car/RPCToolkit@^1.0.0` |
-
-The Node-RED Flow Library page can lag behind npm until its listing is refreshed. The npm package is the source of truth for command-line and Palette Manager installs.
 
 ## Why RPC Toolkit?
 
