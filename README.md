@@ -10,7 +10,7 @@ RPC Toolkit is a cross-runtime JSON-RPC 2.0 ecosystem for building and connectin
 
 Start with standard JSON-RPC 2.0. Add runtime introspection, schema metadata, validation, and optional type-aware interoperability only when you need them.
 
-Cross-runtime interoperability: **36/36** client/server combinations tested and passed across Node.js, Python, Java, .NET, PHP, and Python — plus physical hardware validation on ESP32, ESP8266, and Android.
+Cross-runtime interoperability: **36/36** client/server combinations tested and passed across Node.js, Java, .NET, PHP, and Python — plus physical hardware validation on ESP32, ESP8266, and Android.
 
 Public documentation site: [https://n-car.github.io/rpc-toolkit/](https://n-car.github.io/rpc-toolkit/)
 
@@ -49,6 +49,27 @@ Use the implementation that matches your environment:
 | [rpc-php-toolkit](https://github.com/n-car/rpc-php-toolkit) | PHP | Endpoint + client |
 | [rpc-arduino-toolkit](https://github.com/n-car/rpc-arduino-toolkit) | Arduino / ESP32 / ESP8266 | Embedded endpoint + client |
 | [node-red-contrib-rpc-toolkit](https://github.com/n-car/node-red-contrib-rpc-toolkit) | Node-RED | Visual client/server nodes |
+
+## Public Packages
+
+Public registry versions verified on 2026-06-28:
+
+| Runtime / Target | Registry Package | Latest | Install |
+| --- | --- | --- | --- |
+| Node.js / Express | npm [`rpc-express-toolkit`](https://www.npmjs.com/package/rpc-express-toolkit) | `4.4.0` | `npm install express rpc-express-toolkit` |
+| Express Safe Mode proxy | npm [`rpc-express-toolkit-safe`](https://www.npmjs.com/package/rpc-express-toolkit-safe) | `4.4.0` | `npm install rpc-express-toolkit-safe` |
+| Node.js core | npm [`rpc-node-toolkit`](https://www.npmjs.com/package/rpc-node-toolkit) | `0.1.3` | `npm install rpc-node-toolkit` |
+| JavaScript client | npm [`rpc-toolkit-js-client`](https://www.npmjs.com/package/rpc-toolkit-js-client) | `1.1.2` | `npm install rpc-toolkit-js-client` |
+| Node-RED | npm / Flow Library [`node-red-contrib-rpc-toolkit`](https://flows.nodered.org/node/node-red-contrib-rpc-toolkit) | `2.3.1` on npm | `npm install node-red-contrib-rpc-toolkit` |
+| .NET | NuGet [`RpcToolkit`](https://www.nuget.org/packages/RpcToolkit) | `1.1.5` | `dotnet add package RpcToolkit` |
+| ASP.NET Core | NuGet [`RpcToolkit.AspNetCore`](https://www.nuget.org/packages/RpcToolkit.AspNetCore) | `1.1.5` | `dotnet add package RpcToolkit.AspNetCore` |
+| Java / Android | Maven Central `it.carpanese.rpc:*` | `0.1.0` | `implementation("it.carpanese.rpc:rpc-client:0.1.0")` |
+| Python | PyPI [`rpc-python-toolkit`](https://pypi.org/project/rpc-python-toolkit/) | `0.1.0` | `pip install rpc-python-toolkit` |
+| PHP | Packagist [`n-car/rpc-php-toolkit`](https://packagist.org/packages/n-car/rpc-php-toolkit) | `1.0.4` | `composer require n-car/rpc-php-toolkit` |
+| Arduino / ESP32 / ESP8266 | Arduino Library Manager `RPCToolkit` | `1.0.0` | Install `RPCToolkit` from Library Manager |
+| PlatformIO | PlatformIO [`n-car/RPCToolkit`](https://registry.platformio.org/libraries/n-car/RPCToolkit) | `1.0.0` | `lib_deps = n-car/RPCToolkit@^1.0.0` |
+
+The Node-RED Flow Library page can lag behind npm until its listing is refreshed. The npm package is the source of truth for command-line and Palette Manager installs.
 
 ## Why RPC Toolkit?
 
