@@ -66,7 +66,7 @@ Public registry versions (last partial refresh: 2026-09-24):
 | Python | PyPI [`rpc-python-toolkit`](https://pypi.org/project/rpc-python-toolkit/) | `0.2.0` | `pip install rpc-python-toolkit` |
 | PHP | Packagist [`n-car/rpc-php-toolkit`](https://packagist.org/packages/n-car/rpc-php-toolkit) | `1.0.5` | `composer require n-car/rpc-php-toolkit` |
 | Arduino / ESP32 / ESP8266 | Arduino Library Manager `RPCToolkit` | `1.0.0` | Install `RPCToolkit` from Library Manager |
-| PlatformIO | PlatformIO [`n-car/RPCToolkit`](https://registry.platformio.org/libraries/n-car/RPCToolkit) | `1.0.0` | `lib_deps = n-car/RPCToolkit@^1.0.0` |
+| PlatformIO | PlatformIO [`n-car/RPCToolkit`](https://registry.platformio.org/libraries/n-car/RPCToolkit) | `1.1.0` | `lib_deps = n-car/RPCToolkit@^1.1.0` |
 
 ## Why RPC Toolkit?
 
