@@ -62,7 +62,7 @@ Public registry versions (last partial refresh: 2026-09-24):
 | Node-RED | npm / Flow Library [`node-red-contrib-rpc-toolkit`](https://flows.nodered.org/node/node-red-contrib-rpc-toolkit) | `2.3.1` on npm | `npm install node-red-contrib-rpc-toolkit` |
 | .NET | NuGet [`RpcToolkit`](https://www.nuget.org/packages/RpcToolkit) | `1.2.0` | `dotnet add package RpcToolkit` |
 | ASP.NET Core | NuGet [`RpcToolkit.AspNetCore`](https://www.nuget.org/packages/RpcToolkit.AspNetCore) | `1.2.0` | `dotnet add package RpcToolkit.AspNetCore` |
-| Java / Android | Maven Central `it.carpanese.rpc:*` | `0.1.0` | `implementation("it.carpanese.rpc:rpc-client:0.1.0")` |
+| Java / Android | Maven Central `it.carpanese.rpc:*` | `0.2.0` | `implementation("it.carpanese.rpc:rpc-client:0.2.0")` |
 | Python | PyPI [`rpc-python-toolkit`](https://pypi.org/project/rpc-python-toolkit/) | `0.2.0` | `pip install rpc-python-toolkit` |
 | PHP | Packagist [`n-car/rpc-php-toolkit`](https://packagist.org/packages/n-car/rpc-php-toolkit) | `1.0.5` | `composer require n-car/rpc-php-toolkit` |
 | Arduino / ESP32 / ESP8266 | Arduino Library Manager `RPCToolkit` | `1.0.0` | Install `RPCToolkit` from Library Manager |
