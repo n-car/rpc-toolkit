@@ -14,6 +14,9 @@ workloads.
 Start with standard JSON-RPC 2.0. Add runtime introspection, schema metadata,
 validation, and optional type-aware interoperability only when you need them.
 
+Read the [ecosystem overview](OVERVIEW.md) for the project scope, design goals,
+and relationship to REST, OpenAPI, and OpenRPC.
+
 ## Start Here
 
 | Need | Start With |

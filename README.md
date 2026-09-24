@@ -23,7 +23,7 @@ A browser dashboard polls the Express endpoint for live data.
 Without RPC Toolkit: four unrelated RPC libraries, custom serialization glue between each pair,
 no shared introspection, interoperability untested.
 
-With RPC Toolkit: one protocol, nine maintained runtimes, 36/36 cross-runtime combinations
+With RPC Toolkit: one protocol, nine maintained implementations, 36/36 cross-runtime combinations
 tested, physical ESP32 and Android hardware evidence included.
 
 ## Start Here
@@ -52,7 +52,7 @@ Use the implementation that matches your environment:
 
 ## Public Packages
 
-Public registry versions (last partial refresh: 2026-09-24):
+Public registry versions (last verified: 2026-09-24):
 
 | Runtime / Target | Registry Package | Latest | Install |
 | --- | --- | --- | --- |
@@ -111,8 +111,8 @@ RPC Toolkit is not a replacement for gRPC in high-throughput service meshes.
 It is the right choice when your system spans embedded devices, backend services,
 and integration tools that need to speak the same protocol without glue layers.
 
-No other maintained JSON-RPC ecosystem provides tested interoperability from
-Arduino/ESP32 hardware through Node.js, Python, Java, .NET, PHP, and Node-RED flows.
+RPC Toolkit focuses on tested interoperability spanning Arduino/ESP32 hardware,
+Node.js, Python, Java, .NET, PHP, and Node-RED flows.
 
 ## 2-Minute Example
 

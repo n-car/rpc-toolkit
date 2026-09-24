@@ -5,5 +5,3 @@ header_pages:
   - COMPATIBILITY.md
   - VALIDATION.md
   - ROADMAP.md
-exclude:
-  - LAUNCH_POST_DRAFTS.md
