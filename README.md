@@ -57,7 +57,7 @@ Public registry versions (last verified: 2026-09-25):
 | Runtime / Target | Registry Package | Latest | Install |
 | --- | --- | --- | --- |
 | Node.js / Express | npm [`rpc-express-toolkit`](https://www.npmjs.com/package/rpc-express-toolkit) | `4.5.1` | `npm install express rpc-express-toolkit` |
-| Node.js core | npm [`rpc-node-toolkit`](https://www.npmjs.com/package/rpc-node-toolkit) | `0.2.0` | `npm install rpc-node-toolkit` |
+| Node.js core | npm [`rpc-node-toolkit`](https://www.npmjs.com/package/rpc-node-toolkit) | `0.2.1` | `npm install rpc-node-toolkit` |
 | JavaScript client | npm [`rpc-toolkit-js-client`](https://www.npmjs.com/package/rpc-toolkit-js-client) | `1.1.3` | `npm install rpc-toolkit-js-client` |
 | Node-RED | npm / Flow Library [`node-red-contrib-rpc-toolkit`](https://flows.nodered.org/node/node-red-contrib-rpc-toolkit) | `2.3.2` on npm | `npm install node-red-contrib-rpc-toolkit` |
 | .NET | NuGet [`RpcToolkit`](https://www.nuget.org/packages/RpcToolkit) | `1.2.0` | `dotnet add package RpcToolkit` |
