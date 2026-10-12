@@ -7,6 +7,7 @@ layout: null
 // Keep wide package and compatibility tables inside the reading column.
 .page-content table {
   display: block;
+  width: fit-content;
   max-width: 100%;
   overflow-x: auto;
 }
