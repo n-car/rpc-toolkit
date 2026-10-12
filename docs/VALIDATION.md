@@ -11,7 +11,7 @@ The initial checks used local source changes prepared for Express 4.5.2, Node
 Later Java/Android checks use 0.3.0 with optional per-client network selection.
 The full HTTP matrix was subsequently rerun with final Java 0.3.0 source before
 publication: 36/36 scenarios and 540 checks passed again. Unit suites were also
-rerun for release. Registry availability is tracked separately in the root README.
+rerun for release. Registry availability is tracked in the [release snapshot](RELEASES.md).
 
 | Area | Scope | Result |
 | --- | --- | --- |

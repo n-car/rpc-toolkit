@@ -4,6 +4,25 @@ RPC Toolkit is a cross-runtime JSON-RPC 2.0 ecosystem for building self-describi
 
 It is not a monorepo and this repository is not an implementation package. This repository is the public landing page and documentation hub for the related implementation repositories.
 
+## One System, Several Runtimes
+
+Consider an ESP32 sensor calling a Python analytics service, a Node-RED flow
+invoking a .NET API, and a browser dashboard reading an Express endpoint.
+RPC Toolkit gives these connections a shared JSON-RPC protocol while each
+component keeps its own language and host framework. The endpoints connect
+directly; there is no central RPC Toolkit broker to deploy.
+
+Start with the [library for your runtime](index.md#choose-your-runtime) or follow
+the [first-call example](GETTING_STARTED.md). Optional capabilities are described
+in [Introspection](INTROSPECTION.md) and [Safe Mode](SAFE_MODE.md); exact support
+and tested combinations are listed in [Compatibility](COMPATIBILITY.md).
+
+This ecosystem is useful when one system spans several runtimes or combines
+services with devices and automation flows. For a single small handler with no
+cross-runtime or discovery needs, a simpler JSON-RPC implementation may be
+enough. RPC Toolkit does not aim to replace binary RPC for high-throughput
+service-to-service workloads.
+
 ## What Problem It Solves
 
 JSON-RPC 2.0 is simple and effective for method-oriented APIs, but production endpoints often need more than dispatch:

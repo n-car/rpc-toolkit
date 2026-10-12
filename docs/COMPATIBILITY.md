@@ -20,7 +20,7 @@ test scope are listed in [VALIDATION.md](VALIDATION.md).
 The Express main/Safe proxy packaged-consumer runner also passed offline, as did
 Android debug/release library builds and unit suites with the Windows JDK/SDK.
 The full HTTP matrix was rerun successfully with final Java 0.3.0 source before
-publication. Registry availability is tracked separately in the root README.
+publication. Registry availability is tracked in the [release snapshot](RELEASES.md).
 Node-RED 2.3.4 passed 18 tests against the published Express 4.5.2 package,
 including standard/Safe flow-backed HTTP error regressions; packaging and the
 runtime dependency audit passed too.

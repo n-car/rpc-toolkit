@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">RPC Toolkit: a shared protocol across runtimes</title>
+  <desc id="desc">JavaScript and Node.js, Python and PHP, C# and .NET, Java and Android, ESP32 and ESP8266, and Node-RED communicate through shared JSON-RPC 2.0 semantics. Connections are direct between applications; the protocol is not a central server or broker.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1">
+      <stop stop-color="#0a1929"/>
+      <stop offset="1" stop-color="#102f3b"/>
+    </linearGradient>
+    <linearGradient id="connection" gradientUnits="userSpaceOnUse" x1="398" y1="0" x2="802" y2="0">
+      <stop stop-color="#366279"/>
+      <stop offset=".5" stop-color="#68d9c4"/>
+      <stop offset="1" stop-color="#366279"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#b3d7de" stroke-opacity=".045"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="620" rx="24" fill="url(#background)"/>
+  <rect x="1" y="1" width="1198" height="618" rx="23" fill="url(#grid)" stroke="#2a4557"/>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="48" y="54" fill="#92b3c3" font-size="17" font-weight="700" letter-spacing="2.5">DIFFERENT RUNTIMES. SAME LANGUAGE.</text>
+    <path d="M1032 48h30m12 0h30m12 0h36" stroke="#5ed3bd" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Lines represent the shared wire contract, not a central service. -->
+    <g fill="none" stroke="url(#connection)" stroke-width="2">
+      <path d="M398 157h46q22 0 22 22v78q0 22 22 22h224q22 0 22-22v-78q0-22 22-22h46"/>
+      <path d="M398 311h404"/>
+      <path d="M398 465h46q22 0 22-22v-78q0-22 22-22h224q22 0 22 22v78q0 22 22 22h46"/>
+    </g>
+    <g fill="#73dbc7">
+      <circle cx="422" cy="157" r="4"/>
+      <circle cx="778" cy="157" r="4"/>
+      <circle cx="432" cy="311" r="4"/>
+      <circle cx="768" cy="311" r="4"/>
+      <circle cx="422" cy="465" r="4"/>
+      <circle cx="778" cy="465" r="4"/>
+    </g>
+
+    <!-- A dashed annotation identifies the protocol, not an endpoint. -->
+    <rect x="452" y="212" width="296" height="198" rx="24" fill="#0e2635" stroke="#568681" stroke-dasharray="5 7"/>
+    <text x="600" y="253" text-anchor="middle" fill="#91bbb9" font-size="16" font-weight="700" letter-spacing="2.8">SHARED PROTOCOL</text>
+    <text x="600" y="305" text-anchor="middle" fill="#f3fbfc" font-size="33" font-weight="700">JSON-RPC 2.0</text>
+    <path d="M560 326h80" stroke="#68d9c4" stroke-width="3" stroke-linecap="round"/>
+    <text x="600" y="368" text-anchor="middle" fill="#a8c6d1" font-size="21">No broker required</text>
+
+    <g fill="#142e41" stroke="#355569">
+      <rect x="48" y="99" width="350" height="116" rx="16"/>
+      <rect x="48" y="253" width="350" height="116" rx="16"/>
+      <rect x="48" y="407" width="350" height="116" rx="16"/>
+      <rect x="802" y="99" width="350" height="116" rx="16"/>
+      <rect x="802" y="253" width="350" height="116" rx="16"/>
+      <rect x="802" y="407" width="350" height="116" rx="16"/>
+    </g>
+
+    <!-- Small native line icons: browser, code, application, phone, chip, flow. -->
+    <g fill="none" stroke="#73dbc7" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="72" y="124" width="32" height="27" rx="4"/>
+      <path d="M72 133h32m-26-4h1m5 0h1"/>
+      <path d="m80 280-9 9 9 9m16-18 9 9-9 9m-9 12 4-24"/>
+      <rect x="73" y="433" width="30" height="28" rx="4"/>
+      <path d="M73 443h30m-20 0v18"/>
+      <rect x="829" y="122" width="23" height="34" rx="5"/>
+      <path d="M836 128h9m-7 22h5"/>
+      <rect x="828" y="277" width="27" height="27" rx="4"/>
+      <path d="M836 285h11v11h-11zm-2-13v5m8-5v5m8-5v5m-16 27v5m8-5v5m8-5v5m-27-27h5m-5 8h5m-5 8h5m27-16h5m-5 8h5m-5 8h5"/>
+      <rect x="825" y="435" width="12" height="12" rx="3"/>
+      <rect x="848" y="423" width="12" height="12" rx="3"/>
+      <rect x="848" y="447" width="12" height="12" rx="3"/>
+      <path d="M837 441h5v-12h6m-6 12v12h6"/>
+    </g>
+
+    <g fill="#f2f7fb" font-size="29" font-weight="700">
+      <text x="120" y="149">JS / Node.js</text>
+      <text x="120" y="303">Python / PHP</text>
+      <text x="120" y="457">C# / .NET</text>
+      <text x="875" y="149">Java / Android</text>
+      <text x="875" y="303">ESP32 / ESP8266</text>
+      <text x="875" y="457">Node-RED</text>
+    </g>
+    <g fill="#a8c6d6" font-size="22">
+      <text x="72" y="188">Browsers &amp; services</text>
+      <text x="72" y="342">Backend services</text>
+      <text x="72" y="496">Applications &amp; APIs</text>
+      <text x="826" y="188">Mobile &amp; JVM apps</text>
+      <text x="826" y="342">Embedded devices</text>
+      <text x="826" y="496">Integration flows</text>
+    </g>
+
+    <text x="600" y="579" text-anchor="middle" fill="#d6e8ed" font-size="25">Shared protocol, <tspan fill="#7ce1cb" font-weight="700">direct connections.</tspan></text>
+  </g>
+</svg>
