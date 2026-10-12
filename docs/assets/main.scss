@@ -1,0 +1,12 @@
+---
+layout: null
+---
+
+@import "minima";
+
+// Keep wide package and compatibility tables inside the reading column.
+.page-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
