@@ -10,7 +10,7 @@ RPC Toolkit is a cross-runtime JSON-RPC 2.0 ecosystem for building and connectin
 
 Start with standard JSON-RPC 2.0. Add runtime introspection, schema metadata, validation, and optional type-aware interoperability only when you need them.
 
-Cross-runtime interoperability: **36/36** client/server combinations tested and passed across Node.js, Java, .NET, PHP, and Python — plus physical hardware validation on ESP32, ESP8266, and Android.
+Release validation (2026-10-12): **36/36 scenarios, 540 checks passed** across Node.js, Java, .NET, PHP, and Python: 30 client/server pairs plus six raw HTTP probes. The complete matrix was rerun successfully with final Java 0.3.0 source before publication. Java/Android 0.3.0 also passed Samsung M55 checks against an isolated ESP32 AP while cellular remained the default network, plus a default-client shared-WiFi regression. See the dated scope below.
 
 Public documentation site: [https://n-car.github.io/rpc-toolkit/](https://n-car.github.io/rpc-toolkit/)
 
@@ -23,8 +23,8 @@ A browser dashboard polls the Express endpoint for live data.
 Without RPC Toolkit: four unrelated RPC libraries, custom serialization glue between each pair,
 no shared introspection, interoperability untested.
 
-With RPC Toolkit: one protocol, nine maintained implementations, 36/36 cross-runtime combinations
-tested, physical ESP32 and Android hardware evidence included.
+With RPC Toolkit: one protocol, nine maintained implementations, cross-runtime
+tests, and separately dated embedded and Android hardware validation.
 
 ## Start Here
 
@@ -52,21 +52,47 @@ Use the implementation that matches your environment:
 
 ## Public Packages
 
-Public registry versions (last verified: 2026-09-25):
+These commands install published packages. Follow the registry links for available
+versions and the release status below.
 
-| Runtime / Target | Registry Package | Latest | Install |
-| --- | --- | --- | --- |
-| Node.js / Express | npm [`rpc-express-toolkit`](https://www.npmjs.com/package/rpc-express-toolkit) | `4.5.1` | `npm install express rpc-express-toolkit` |
-| Node.js core | npm [`rpc-node-toolkit`](https://www.npmjs.com/package/rpc-node-toolkit) | `0.2.1` | `npm install rpc-node-toolkit` |
-| JavaScript client | npm [`rpc-toolkit-js-client`](https://www.npmjs.com/package/rpc-toolkit-js-client) | `1.1.3` | `npm install rpc-toolkit-js-client` |
-| Node-RED | npm / Flow Library [`node-red-contrib-rpc-toolkit`](https://flows.nodered.org/node/node-red-contrib-rpc-toolkit) | `2.3.3` on npm | `npm install node-red-contrib-rpc-toolkit` |
-| .NET | NuGet [`RpcToolkit`](https://www.nuget.org/packages/RpcToolkit) | `1.2.0` | `dotnet add package RpcToolkit` |
-| ASP.NET Core | NuGet [`RpcToolkit.AspNetCore`](https://www.nuget.org/packages/RpcToolkit.AspNetCore) | `1.2.0` | `dotnet add package RpcToolkit.AspNetCore` |
-| Java / Android | Maven Central `it.carpanese.rpc:*` | `0.2.0` | `implementation("it.carpanese.rpc:rpc-client:0.2.0")` |
-| Python | PyPI [`rpc-python-toolkit`](https://pypi.org/project/rpc-python-toolkit/) | `0.2.0` | `pip install rpc-python-toolkit` |
-| PHP | Packagist [`n-car/rpc-php-toolkit`](https://packagist.org/packages/n-car/rpc-php-toolkit) | `1.0.5` | `composer require n-car/rpc-php-toolkit` |
-| Arduino / ESP32 / ESP8266 | Arduino Library Manager `RPCToolkit` | `1.1.0` | Install `RPCToolkit` from Library Manager |
-| PlatformIO | PlatformIO [`n-car/RPCToolkit`](https://registry.platformio.org/libraries/n-car/RPCToolkit) | `1.1.0` | `lib_deps = n-car/RPCToolkit@^1.1.0` |
+| Runtime / Target | Registry Package | Install |
+| --- | --- | --- |
+| Node.js / Express | npm [`rpc-express-toolkit`](https://www.npmjs.com/package/rpc-express-toolkit) | `npm install express rpc-express-toolkit` |
+| Node.js core | npm [`rpc-node-toolkit`](https://www.npmjs.com/package/rpc-node-toolkit) | `npm install rpc-node-toolkit` |
+| JavaScript client | npm [`rpc-toolkit-js-client`](https://www.npmjs.com/package/rpc-toolkit-js-client) | `npm install rpc-toolkit-js-client` |
+| Node-RED | npm / Flow Library [`node-red-contrib-rpc-toolkit`](https://flows.nodered.org/node/node-red-contrib-rpc-toolkit) | `npm install node-red-contrib-rpc-toolkit` |
+| .NET | NuGet [`RpcToolkit`](https://www.nuget.org/packages/RpcToolkit) | `dotnet add package RpcToolkit` |
+| ASP.NET Core | NuGet [`RpcToolkit.AspNetCore`](https://www.nuget.org/packages/RpcToolkit.AspNetCore) | `dotnet add package RpcToolkit.AspNetCore` |
+| Java / Android | Maven Central `it.carpanese.rpc:*` | Select a published `it.carpanese.rpc:rpc-client` version |
+| Python | PyPI [`rpc-python-toolkit`](https://pypi.org/project/rpc-python-toolkit/) | `pip install rpc-python-toolkit` |
+| PHP | Packagist [`n-car/rpc-php-toolkit`](https://packagist.org/packages/n-car/rpc-php-toolkit) | `composer require n-car/rpc-php-toolkit` |
+| Arduino / ESP32 / ESP8266 | Arduino Library Manager `RPCToolkit` | Install `RPCToolkit` from Library Manager |
+| PlatformIO | PlatformIO [`n-car/RPCToolkit`](https://registry.platformio.org/libraries/n-car/RPCToolkit) | `lib_deps = n-car/RPCToolkit` |
+
+### Release Status — 2026-10-12
+
+Registry availability is checked separately from successful upload and GitHub tags:
+
+| Implementation | Version | Registry status |
+| --- | --- | --- |
+| Express (including the compatibility safe package) | `4.5.2` | Available on npm; artifact integrity verified |
+| Node core | `0.2.2` | Available on npm; artifact integrity verified |
+| .NET / ASP.NET Core | `1.2.1` | Both packages available on NuGet |
+| Java modules | `0.3.0` | All four modules available on Maven Central |
+| Python | `0.2.1` | Available on PyPI |
+| PHP | `2.0.1` | Available on Packagist |
+| Arduino / PlatformIO | `1.1.1` | Available on PlatformIO; Arduino Library Manager indexing pending |
+| Node-RED | `2.3.4` | Available on npm; artifact integrity verified |
+
+These changes align invalid envelopes, explicit null IDs, notifications, and Safe
+Mode payload handling; sanitize unexpected errors in the affected runtimes; and
+retain PHP's trusted-context protection. Arduino also fixes HTTP 204 batch
+completion and ESP32 response-buffer stack use. Java/Android 0.3.0 adds optional
+per-client socket/DNS configuration and Android `useNetwork(network)`, without
+changing the wire protocol or the default network behavior. See each implementation's
+release notes for API-specific details. The shared JS client stays at 1.1.3.
+Node-RED 2.3.4 raises its Express toolkit requirement to 4.5.2 and documents the
+public application-error contract for flow responses.
 
 ## Why RPC Toolkit?
 
@@ -235,15 +261,19 @@ See:
 - [Compatibility matrix](docs/COMPATIBILITY.md)
 - [Validation snapshot](docs/VALIDATION.md)
 
-Current public snapshot highlights, last updated on 2026-06-13:
+Local source snapshot, 2026-10-12:
 
-- Cross-runtime HTTP interoperability matrix: `36/36` client/server combinations passed.
-- Express Safe Mode baseline: `pass=13 fail=0`.
-- Node core HTTP Safe Mode: `pass=16 fail=0 gap=0`.
-- .NET, Java, PHP, and Python client/server matrix runs passed.
-- Android runtime evidence: physical `rpc-android` instrumentation tests passed on Samsung `SM-T733`, Android 14/API 34.
-- Arduino runtime evidence: physical ESP32 and ESP8266EX WiFi runs passed.
-- Node-RED runtime probe and public Flow Library scorecard are green.
+- Cross-runtime HTTP interoperability: 30 client/server pairs and six raw probes, `36/36` scenarios and `540` checks passed again with final Java 0.3.0 before publication.
+- Release unit results across PHP, Node, Express, Python, Java, and .NET: `450` tests passed, including `70` Java 0.3.0 tests, plus `40` .NET Newtonsoft/netstandard regressions.
+- Express main and Safe proxy packaged consumers: full offline runner passed, including ESM/CommonJS types and runtime, Publint, and ATTW.
+- Node-RED 2.3.4: `18/18` tests passed against published Express 4.5.2, including four flow-backed HTTP error cases in standard and Safe Mode; package checks and runtime dependency audit passed.
+- Android 0.3.0: debug/release AAR builds and three unit cases per variant passed with the Windows JDK/SDK. Earlier 0.2.1 evidence includes four instrumented tests on Samsung M55 against local Express over USB `adb reverse`.
+- M55 to ESP32, 0.2.1 baseline: four cases passed three times per mode on shared WiFi and the isolated AP with mobile data disabled. The unbound client timed out on the AP when cellular was the default network; this remains the historical control.
+- M55 to ESP32, 0.3.0 opt-in: `12/12` instrumented executions passed on the isolated AP using explicit WiFi selection with mobile data enabled. Each test checked that cellular remained the default before/after the RPC calls and that the process binding was unchanged.
+- M55 to ESP32, 0.3.0 default-client regression: another `12/12` executions passed on shared WiFi without the optional configuration; see the validation notes for the initial network setup retry.
+- Arduino: `222` offline protocol checks and `92` board-to-board HTTP checks passed on ESP32/ESP8266, in both directions and both Safe Mode settings.
+- The Arduino results include the ESP32 default-stack fix and a corrected ESP8266 test fixture. These are bounded regression runs, not soak tests.
+- Earlier Android 14/WiFi, Node-RED Docker probe, and Flow Library scorecard results remain in the dated 2026-06-13 historical snapshot; those configurations were not rerun in this work.
 
 For the full details, use the compatibility and validation documents above.
 

@@ -51,3 +51,23 @@ Safe Mode is not security. It does not authenticate callers, authorize methods, 
 Introspection is not a security boundary. Hiding methods can reduce accidental discovery, but it does not prevent direct calls.
 
 Authorization must be enforced at call time using the host application's security model, middleware, method-level policies, gateway rules, or equivalent controls.
+
+## Dispatch and Error Boundaries
+
+PHP 2.0.1 keeps the trusted-context protection introduced in
+2.0.0: normal handlers receive `(params, context)`, with object and array params
+passed as one container. Explicit positional handlers reserve the last argument
+for server context and reject excess client arguments. Never derive the trusted
+context from request parameters.
+
+Unexpected exceptions are not public application errors. The affected Node,
+Express, Python, and PHP releases return a generic `-32603 / Internal error`
+without exception details. Explicitly supported application-error types/codes
+remain public, including their intended `error.data`; do not put secrets in them.
+Node/Express `sanitizeErrors: false` is a development-only opt-out. Consult each
+runtime's API for the supported public-error mechanism rather than relying on an
+arbitrary exception shape.
+
+These protections do not replace deployment controls. Review application logs
+and HTTP error handling separately, keep debug responses off in production, and
+enforce authentication and authorization before invoking protected handlers.

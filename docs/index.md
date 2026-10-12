@@ -37,6 +37,12 @@ The ecosystem has interoperability coverage across JavaScript, .NET, PHP,
 Python, Java, Arduino/ESP32/ESP8266, and Node-RED paths. The validation material
 is maintained as evidence, not as marketing copy.
 
+The 2026-10-12 release validation passed 36/36 HTTP scenarios (540 checks),
+including a complete rerun with final Java 0.3.0, plus ESP32/ESP8266 protocol and
+board-to-board regressions. Publication and registry availability are tracked
+in the [release status](https://github.com/n-car/rpc-toolkit#release-status--2026-10-12). Older device and
+Node-RED results remain explicitly dated in the validation notes.
+
 - [Compatibility matrix](COMPATIBILITY.md)
 - [Validation notes](VALIDATION.md)
 - [Roadmap](ROADMAP.md)

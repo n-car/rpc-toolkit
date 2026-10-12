@@ -19,6 +19,11 @@ BigInt-looking string  -> "S:9007199254740993n"
 
 The `S:` prefix protects application strings that would otherwise look like Safe Mode markers.
 
+Only application payload fields are transformed: request `params`, response
+`result`, and `error.data`. Envelope metadata (`jsonrpc`, `method`, IDs, and
+`error.message`) stays unchanged. For example, an ID of `"S:request-1"` must be
+returned exactly as supplied, and `id: null` must remain present in the response.
+
 ## Negotiation
 
 HTTP implementations commonly use `X-RPC-Safe-Enabled` negotiation. Exact behavior is implementation-specific:

@@ -12,7 +12,52 @@ Statuses:
 - `Implementation-specific`: the concept exists but behavior depends on host/framework usage.
 - `Unknown`: not enough evidence to make a public claim.
 
-## Validation Highlights
+## Current Local Regression Highlights
+
+On 2026-10-12 the release source passed 36/36 HTTP scenarios (540 checks),
+222 offline Arduino checks, and 92 ESP32/ESP8266 HTTP checks. Source versions and
+test scope are listed in [VALIDATION.md](VALIDATION.md).
+The Express main/Safe proxy packaged-consumer runner also passed offline, as did
+Android debug/release library builds and unit suites with the Windows JDK/SDK.
+The full HTTP matrix was rerun successfully with final Java 0.3.0 source before
+publication. Registry availability is tracked separately in the root README.
+Node-RED 2.3.4 passed 18 tests against the published Express 4.5.2 package,
+including standard/Safe flow-backed HTTP error regressions; packaging and the
+runtime dependency audit passed too.
+
+The Android 0.2.1 baseline passed four instrumented tests on Samsung M55
+(Android 16/API 36) against local Express over USB `adb reverse`. Direct ESP32
+runs also passed three times per mode on shared WiFi and an isolated AP with
+mobile data disabled. With cellular as the default network, the unbound client
+timed out on the AP; this remains a historical diagnostic control.
+
+Java/Android 0.3.0 adds opt-in per-client socket/DNS configuration and
+`useNetwork(network)`, leaving JSON-RPC and default routing unchanged. The M55
+then passed all four cases in three consecutive AP runs (`12/12` executions)
+with explicit WiFi selection and mobile data enabled. Every test asserted a
+cellular default network before/after and unchanged process binding. Java unit
+tests passed `70/70`; Android's three unit cases passed in each build variant.
+The 0.3.0 default client also passed `12/12` executions on shared WiFi with no
+selection arguments, after restarting the ESP32 following an initially
+unreachable AP-to-station switch; see the validation notes.
+
+### Aligned Server Contract
+
+The Express, Node, .NET, Java, PHP, Python, and Arduino versions listed in the release snapshot enforce:
+
+- `jsonrpc` must be `"2.0"`, `method` a nonempty string, and supplied `params` an object or array.
+- IDs may be strings, finite numbers, or explicit `null`. Only an absent ID denotes a notification.
+- Invalid envelopes return `-32600` with `id: null`, even without an incoming ID. Invalid JSON returns `-32700`.
+- Valid notifications have no JSON-RPC response; invalid batch items still produce individual errors.
+- Safe Mode transforms `params`, `result`, and `error.data`, not `method`, IDs, or error messages.
+
+Wire compatibility does not require identical callback APIs. In PHP, the default
+handler receives the entire params container plus trusted server context; array
+params are not implicitly spread into arguments. Explicit positional mode keeps
+the final context slot reserved. Nested empty or numeric-key JSON objects may be
+represented by `stdClass` to preserve their wire shape.
+
+## Historical Validation Highlights
 
 Last updated: 2026-06-13.
 
@@ -32,11 +77,11 @@ Last updated: 2026-06-13.
 
 ## HTTP Interoperability Matrix
 
-The matrix below uses the shared Safe Mode HTTP contract and was run on 2026-06-13. Servers: `rpc-express-toolkit`, `rpc-node-toolkit`, `rpc-dotnet-toolkit`, `rpc-java-toolkit`, `rpc-php-toolkit`, and `rpc-python-toolkit`.
+The matrix below uses the shared Safe Mode HTTP contract and was rerun locally on 2026-10-12 with final Java 0.3.0 source before publication. Servers: `rpc-express-toolkit`, `rpc-node-toolkit`, `rpc-dotnet-toolkit`, `rpc-java-toolkit`, `rpc-php-toolkit`, and `rpc-python-toolkit`. It consists of 30 client/server pairs plus six raw HTTP probes, not 36 distinct client/server pairs.
 
 | Client | Express | Node | .NET | Java | PHP | Python |
 | --- | --- | --- | --- | --- | --- | --- |
-| Raw HTTP probe | PASS (14/0) | PASS (14/0) | PASS (14/0) | PASS (14/0) | PASS (14/0) | PASS (14/0) |
+| Raw HTTP probe | PASS (19/0) | PASS (19/0) | PASS (19/0) | PASS (19/0) | PASS (19/0) | PASS (19/0) |
 | JS client | PASS (9/0) | PASS (9/0) | PASS (9/0) | PASS (9/0) | PASS (9/0) | PASS (9/0) |
 | .NET client | PASS (17/0) | PASS (17/0) | PASS (17/0) | PASS (17/0) | PASS (17/0) | PASS (17/0) |
 | Java client | PASS (17/0) | PASS (17/0) | PASS (17/0) | PASS (17/0) | PASS (17/0) | PASS (17/0) |
@@ -78,9 +123,9 @@ The matrix below uses the shared Safe Mode HTTP contract and was run on 2026-06-
 
 ## Notes
 
-- `rpc-arduino-toolkit` has captured physical WiFi runtime evidence on ESP32 and ESP8266. The current snapshot includes Node client to ESP32 server, ESP8266 client to Express, and ESP8266 client to ESP32 server runs.
+- `rpc-arduino-toolkit` has current physical ESP32/ESP8266 client/server evidence in both directions and both Safe Mode settings. Node/Express reference runs remain separate historical evidence.
 - `rpc-python-toolkit` has client/server Safe Mode interoperability evidence and unit-test coverage in the current validation snapshot.
-- `rpc-java-toolkit` includes Android client runtime evidence through physical `rpc-android` instrumentation tests on Android 14/API 34, including both `adb reverse` and direct WiFi/LAN endpoint runs.
+- `rpc-java-toolkit` includes Android 16/API 36 baseline evidence over USB and WiFi, plus 0.3.0 explicit-network AP checks with cellular still the default. Android 14/API 34 evidence over USB and direct WiFi/LAN remains historical. Explicit network selection is optional and per client, not a process-wide bind.
 - `rpc-toolkit-js-client` is a client library, so server-side features such as introspection hosting and runtime validation are not applicable.
-- `node-red-contrib-rpc-toolkit` integrates RPC endpoints into Node-RED flows and delegates core HTTP behavior through the Node-RED runtime and `rpc-express-toolkit`. Docker runtime probe and public Flow Library scorecard are green.
+- `node-red-contrib-rpc-toolkit` integrates RPC endpoints into Node-RED flows and delegates core HTTP behavior through the Node-RED runtime and `rpc-express-toolkit`. Current node/helper tests include HTTP flow responses; the Docker runtime probe and public Flow Library scorecard are historical evidence.
 - Java strict HTTP Safe Mode header handling is a wrapper-level concern in the tested server because the Java core endpoint is transport agnostic.

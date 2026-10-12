@@ -4,7 +4,87 @@ This page records the current maintainer validation snapshot for the RPC Toolkit
 
 The numbers below are not marketing claims. They are the results of local interoperability and package validation runs performed against the maintained implementation repositories.
 
-## Snapshot
+## Current Local Source Snapshot (2026-10-12)
+
+The initial checks used local source changes prepared for Express 4.5.2, Node
+0.2.2, .NET 1.2.1, Java 0.2.1, PHP 2.0.1, Python 0.2.1, and Arduino 1.1.1.
+Later Java/Android checks use 0.3.0 with optional per-client network selection.
+The full HTTP matrix was subsequently rerun with final Java 0.3.0 source before
+publication: 36/36 scenarios and 540 checks passed again. Unit suites were also
+rerun for release. Registry availability is tracked separately in the root README.
+
+| Area | Scope | Result |
+| --- | --- | --- |
+| HTTP interoperability | Five clients against six servers, plus one raw probe per server; loopback only, final Java 0.3.0 | 36/36 scenarios, 540 checks, zero failures/gaps in the release rerun |
+| Release unit results | PHP 81, Node 23, Express 137, Python 34, Java 0.3.0 70, .NET 105 | 450 tests passed; Java includes 10 network-configuration regressions |
+| .NET alternate serializer | Actual netstandard/Newtonsoft binary under a .NET 8 test host | 40 additional regressions passed |
+| Express packaged consumers | Main and Safe proxy 4.5.2 tarballs; offline installation, ESM/CommonJS types and runtime, Publint, ATTW | Full runner passed on Node 24.14.0 and TypeScript 6.0.3; cached `@types/node` 26.6.2 |
+| Node-RED 2.3.4 | Published Express 4.5.2 dependency; node/helper tests including four real flow-backed HTTP error cases in standard and Safe Mode | 18/18 tests passed; clean runtime dependency audit; package check passed for 27 files with mode `0644` |
+| Android 0.3.0 library | Windows JDK 21.0.8, Gradle 8.9, SDK platform 34/build-tools 34.0.0; `test assemble --offline --rerun-tasks` | Debug/release AAR builds passed; 3 distinct unit cases passed in each variant (6 executions), no failures or skips |
+| Android device runtime | Example app using Java/Android 0.2.1 source on Samsung M55 `SM-M556E`, Android 16/API 36; Express 4.5.2 source on Windows Node 24.19.0, USB `adb reverse` to loopback only | 4 instrumented tests passed; RPC calls, Safe Mode, batches, notifications, and application error data |
+| Android to ESP32, shared WiFi baseline | M55 Java/Android 0.2.1 against Arduino 1.1.1 source on ESP32-D0WD-V3, default 8 KB loop stack; direct LAN HTTP, no USB forwarding | 4 cases passed in 3 consecutive runs: 12 successful executions |
+| Android to ESP32, isolated AP baseline | Same 0.2.1 client/server; ESP32 access point without Internet, mobile data temporarily disabled | 4 cases passed in 3 consecutive runs: 12 successful executions |
+| Isolated AP with mobile data enabled, baseline control | Same AP and unbound 0.2.1 Android client | 4 connection timeouts: Android selected the cellular route; WiFi-bound ping still reached the ESP32 |
+| Android 0.3.0 to isolated ESP32 AP | M55 Android 16/API 36, same Arduino server; `rpcNetwork=wifi` and `rpcRequireCellularDefault=true`, mobile data enabled | 4 cases passed in 3 consecutive runs: 12 successful executions; cellular default asserted before/after every test, process binding unchanged |
+| Android 0.3.0 to ESP32, shared WiFi regression | Same phone/server, default client with no network-selection arguments | 4 cases passed in 3 consecutive runs: 12 successful executions |
+| Arduino offline protocol | ESP32 and ESP8266, 54 standard and 57 Safe Mode checks each | 222 checks passed |
+| Arduino HTTP | ESP32 client to ESP8266 server and reverse, standard and Safe Mode, 23 checks per run | 92 checks passed |
+
+Release CI also passed for all changed implementations. Node-RED 2.3.4 passed
+all ten configured Node.js/Node-RED combinations plus its package-check job;
+these jobs complement, rather than replace, the local and device checks above.
+
+The Arduino run found and fixed an ESP32 default-stack overflow by moving response
+documents to the heap. ESP8266 test-fixture documents also moved to the heap; the
+previously failing Safe Mode run was repeated with a 40-second crash-free capture.
+Boards were left running the offline test firmware. This is not long-duration,
+heap-exhaustion, or exhaustive board/core validation. Node-RED's current tests
+are separate from its older Docker runtime probe and public Flow Library
+scorecard; those were not rerun and remain explicitly historical below.
+
+The initial Android 0.2.1 run restored missing versions of already-declared dependencies into
+an isolated Gradle cache; it did not change dependency declarations or the SDK.
+The library unit cases cover client configuration; the separate M55 instrumented
+run covers HTTP interoperability on the device. The temporary example/test apps
+and USB mapping were removed afterward, and the local server was stopped.
+
+The initial 0.2.1 direct ESP32 runs observed 33 HTTP requests per mode, with no reset/panic
+markers in each bounded 35-second serial capture. An initial shared-LAN run was
+interrupted by opening a serial monitor that reset the board; the complete run
+was repeated with DTR/RTS disabled. These are not soak or payload-limit tests.
+The notification assertion checks the count, not the event name.
+
+The 0.2.1 AP baseline followed the process default network, which was cellular
+when mobile data was enabled despite the WiFi association. Disabling mobile data
+was a diagnostic control, not an SDK fix. After that baseline run, mobile data
+and the original WiFi connection were restored, the temporary AP profile and
+test apps were removed, and the ESP32 returned to offline regression firmware.
+
+The later 0.3.0 AP run uses `RpcClientConfig.useNetwork(network)` to bind both
+socket creation and DNS to the application's selected network. This is opt-in:
+default routing and the JSON-RPC/Safe Mode wire protocol are unchanged. Custom
+socket factories use direct connections rather than system proxies; the
+application owns network selection and client replacement when a network is
+lost. The 12 successful AP executions validate WiFi RPC while cellular remains
+the default, not a process-wide network change. Because the endpoint is a numeric
+IP, these device tests do not establish real DNS-query routing; the JVM tests
+cover custom resolver use and failure propagation without fallback. The AP's
+bounded 35-second serial capture recorded 33 HTTP requests and no reset, panic,
+or network-failure markers; this is not a soak test.
+
+The 0.3.0 default-client LAN rerun initially could not reach the ESP32 after its
+AP-to-station mode switch; ping from both phone and PC also failed. After
+restarting the board and verifying connectivity, all 12 executions passed
+without RPC code changes. The bounded capture recorded 33 HTTP requests without
+reset/panic markers. This initial setup failure is not evidence of an RPC
+regression, nor does the rerun establish reliable AP-to-station switching.
+
+After the 0.3.0 tests, the phone was left on its original `WIFI` network with
+mobile data enabled. Temporary test apps and the AP profile were removed. The
+ESP32 was restored to offline Safe Mode regression firmware and reported
+`PASS` with 57 checks; the other board was not changed during these tests.
+
+## Historical Snapshot (2026-06-13)
 
 Last updated: 2026-06-13
 
@@ -31,7 +111,7 @@ Last updated: 2026-06-13
 | Node-RED runtime probe | Dockerized Node-RED 4.1.0 feature probe with `node-red-contrib-rpc-toolkit` | `pass=27 fail=0` |
 | Node-RED Flow Library scorecard | Public Flow Library scorecard for `node-red-contrib-rpc-toolkit` | `pass=12 warn=0 fail=0` |
 
-## HTTP Matrix Detail
+## Historical HTTP Matrix Detail
 
 Run date: 2026-06-13.
 
@@ -66,7 +146,7 @@ The interoperability runs cover the following behavior across the service runtim
 
 - The numbers are scenario results, not a formal certification program.
 - The Arduino runtime results are physical hardware evidence for the tested ESP32 and ESP8266EX boards. They do not imply validation of every ESP board variant or every network condition.
-- The Android runtime result is physical client-side evidence for one Samsung tablet on Android 14/API 34, tested both through `adb reverse` and through a direct WiFi/LAN endpoint. It does not imply validation of every Android device, API level, or network condition.
+- Current Android device evidence covers one Samsung M55 on Android 16/API 36: the 0.2.1 USB/shared-WiFi/AP baseline, the 0.3.0 explicitly selected WiFi AP with cellular still the default, and a 0.3.0 default-client shared-WiFi rerun. The earlier unbound AP failure is retained as a control. This does not imply validation of every device/API level, real DNS routing, network-loss recovery, or background power-management condition.
 - Java HTTP strict-header handling is implemented in the test server wrapper because the Java core endpoint is transport agnostic.
 - PHP and Arduino preserve BigInt marker strings where the runtime does not expose JavaScript BigInt semantics.
 
@@ -74,4 +154,4 @@ The interoperability runs cover the following behavior across the service runtim
 
 The current evidence supports saying that the maintained service runtimes interoperate over standard JSON-RPC 2.0 and RPC Toolkit Safe Mode in the tested HTTP scenarios.
 
-No protocol incompatibility was observed in the current HTTP interoperability matrix. Remaining work is mostly scope expansion outside the tested scenarios, such as additional hardware variants, host frameworks, deployment environments, and network conditions.
+No protocol incompatibility was observed in the current HTTP interoperability matrix. This does not imply identical host APIs or full coverage of application authentication, heap exhaustion, additional hardware, host frameworks, or deployment conditions.
